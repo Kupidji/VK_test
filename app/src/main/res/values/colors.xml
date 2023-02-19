@@ -10,4 +10,8 @@
 
     <color name="user_background">#0077FF</color>
     <color name="text_color">#FFFFFF</color>
+    <color name="progress_bar_color">#CCCCCC</color>
+    <color name="alert_color">#29272A</color>
+    <color name="colorPrimaryDark">#020202</color>
+    <color name="colorPrimaryDark2">#090909</color>
 </resources>

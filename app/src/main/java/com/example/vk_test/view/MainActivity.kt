@@ -3,6 +3,7 @@ package com.example.vk_test.view
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import com.example.vk_test.R
@@ -23,14 +24,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         bottomSheet()
 
         binding.message.setOnClickListener {
-
+            //todo сделать переход в новое активити
         }
 
         binding.person.setOnClickListener {
-
+            //todo сделать новое активити RecyclerView
         }
 
         binding.apps.setOnClickListener {
@@ -66,10 +69,32 @@ class MainActivity : AppCompatActivity() {
         if (cameraStatus) {
             cameraStatus = false
             binding.camera.setImageResource(R.drawable.camera_off_60)
+            if (appsStatus) {
+                binding.userBackground2.setImageResource(R.drawable.user_background1)
+                binding.avatar2.visibility = View.VISIBLE
+                binding.progressBar2.visibility = View.GONE
+            }
+            else {
+                binding.userBackground1.setImageResource(R.drawable.user_background1)
+                binding.avatar1.visibility = View.VISIBLE
+                binding.progressBar1.visibility = View.GONE
+            }
         }
         else {
             cameraStatus = true
             binding.camera.setImageResource(R.drawable.camera_on_60)
+            if (appsStatus) {
+                binding.userBackground2.setImageResource(R.drawable.user_background_loading)
+                binding.avatar2.visibility = View.GONE
+                binding.progressBar2.visibility = View.VISIBLE
+            }
+            else {
+                binding.userBackground1.setImageResource(R.drawable.user_background_loading)
+                binding.avatar1.visibility = View.GONE
+                binding.progressBar1.visibility = View.VISIBLE
+
+            }
+
         }
     }
     private fun switchUsers() {
@@ -97,6 +122,13 @@ class MainActivity : AppCompatActivity() {
             binding.userBackground1.setImageResource(R.drawable.user_background2)
             binding.avatar1.setImageResource(R.drawable.avatar2_48)
             binding.name1.text = binding.name2.text
+
+            if (binding.progressBar1.isVisible) {
+                binding.progressBar1.visibility = View.GONE
+                binding.progressBar2.visibility = View.VISIBLE
+                //todo закончил тут, нужно сделать ветку else
+            }
+
             if (binding.mutedMicro2.isVisible) {
                 if (binding.mutedMicro.isVisible) {
                     binding.mutedMicro2.visibility = View.VISIBLE
