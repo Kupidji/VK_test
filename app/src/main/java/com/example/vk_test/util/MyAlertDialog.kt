@@ -1,4 +1,4 @@
-package com.example.vk_test.view.util
+package com.example.vk_test.util
 
 import android.app.AlertDialog
 import android.app.Dialog

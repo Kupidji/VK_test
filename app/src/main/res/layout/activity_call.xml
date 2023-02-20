@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity"
+    tools:context=".view.CallActivity"
     android:background="@drawable/background"
     >
 
@@ -223,54 +223,54 @@
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                 android:background="@drawable/bottom_navigation_background">
 
-                <androidx.constraintlayout.helper.widget.Flow
-                    android:id="@+id/flow"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="camera, mic, hand, call_down"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    <androidx.constraintlayout.helper.widget.Flow
+                        android:id="@+id/flow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="camera, mic, hand, call_down"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
 
-                <ImageButton
-                    android:id="@+id/camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/mic"
-                    android:src="@drawable/camera_off_60"
-                    android:background="@android:color/transparent"
-                    />
+                    <ImageButton
+                        android:id="@+id/camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@id/mic"
+                        android:src="@drawable/camera_off_60"
+                        android:background="@android:color/transparent"
+                        />
 
-                <ImageButton
-                    android:id="@+id/mic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/camera"
-                    app:layout_constraintEnd_toStartOf="@id/hand"
-                    android:src="@drawable/mic_on_60"
-                    android:background="@android:color/transparent"
-                    />
+                    <ImageButton
+                        android:id="@+id/mic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/camera"
+                        app:layout_constraintEnd_toStartOf="@id/hand"
+                        android:src="@drawable/mic_on_60"
+                        android:background="@android:color/transparent"
+                        />
 
-                <ImageButton
-                    android:id="@+id/hand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/mic"
-                    app:layout_constraintEnd_toStartOf="@id/call_down"
-                    android:src="@drawable/hand_60"
-                    android:background="@android:color/transparent"
-                    />
+                    <ImageButton
+                        android:id="@+id/hand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/mic"
+                        app:layout_constraintEnd_toStartOf="@id/call_down"
+                        android:src="@drawable/hand_60"
+                        android:background="@android:color/transparent"
+                        />
 
-                <ImageButton
-                    android:id="@+id/call_down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/hand"
-                    android:src="@drawable/call_down_60"
-                    android:background="@android:color/transparent"
-                    />
+                    <ImageButton
+                        android:id="@+id/call_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/hand"
+                        android:src="@drawable/call_down_60"
+                        android:background="@android:color/transparent"
+                        />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

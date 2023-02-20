@@ -1,39 +1,61 @@
 package com.example.vk_test.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import com.example.vk_test.R
-import com.example.vk_test.databinding.ActivityMainBinding
-import com.example.vk_test.view.util.MyAlertDialog
+import com.example.vk_test.data.Contact
+import com.example.vk_test.databinding.ActivityCallBinding
+import com.example.vk_test.util.Constants
+import com.example.vk_test.util.MyAlertDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
-class MainActivity : AppCompatActivity() {
+class CallActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityMainBinding
+    lateinit var binding : ActivityCallBinding
     private var appsStatus = false
+    private var currentAvatar = R.drawable.avatar2_48
     private var cameraStatus = false
     private var micStatus = false
+    private var launcher : ActivityResultLauncher<Intent>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityCallBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         bottomSheet()
 
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                result : ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                val tempContact = (result.data?.getSerializableExtra(Constants.CONTACT) as Contact)
+                currentAvatar = tempContact.avatar
+                binding.avatar2.setImageResource(tempContact.avatar)
+                binding.name2.text = tempContact.name
+            }
+        }
+
         binding.message.setOnClickListener {
-            //todo сделать переход в новое активити
+            val sendIntent = Intent(Intent.ACTION_VIEW)
+            sendIntent.data = Uri.parse("sms:")
+            startActivity(sendIntent)
         }
 
         binding.person.setOnClickListener {
-            //todo сделать новое активити RecyclerView
+            var i = Intent(this, ContactsActivity::class.java)
+            launcher?.launch(i)
         }
 
         binding.apps.setOnClickListener {
@@ -97,10 +119,11 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
     private fun switchUsers() {
         if (appsStatus) {
             binding.userBackground2.setImageResource(R.drawable.user_background2)
-            binding.avatar2.setImageResource(R.drawable.avatar2_48)
+            binding.avatar2.setImageResource(currentAvatar)
             binding.name2.text = binding.name1.text
             if (binding.mutedMicro.isVisible) {
                 if (binding.mutedMicro2.isVisible) {
@@ -120,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             binding.userBackground1.setImageResource(R.drawable.user_background2)
-            binding.avatar1.setImageResource(R.drawable.avatar2_48)
+            binding.avatar1.setImageResource(currentAvatar)
             binding.name1.text = binding.name2.text
 
             if (binding.progressBar1.isVisible) {
