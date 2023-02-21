@@ -42,8 +42,15 @@ class CallActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 val tempContact = (result.data?.getSerializableExtra(Constants.CONTACT) as Contact)
                 currentAvatar = tempContact.avatar
-                binding.avatar2.setImageResource(tempContact.avatar)
-                binding.name2.text = tempContact.name
+                if (appsStatus) {
+                    binding.avatar1.setImageResource(tempContact.avatar)
+                    binding.name1.text = tempContact.name
+                }
+                else {
+                    binding.avatar2.setImageResource(tempContact.avatar)
+                    binding.name2.text = tempContact.name
+                }
+
             }
         }
 
@@ -122,50 +129,95 @@ class CallActivity : AppCompatActivity() {
 
     private fun switchUsers() {
         if (appsStatus) {
-            binding.userBackground2.setImageResource(R.drawable.user_background2)
-            binding.avatar2.setImageResource(currentAvatar)
-            binding.name2.text = binding.name1.text
-            if (binding.mutedMicro.isVisible) {
-                if (binding.mutedMicro2.isVisible) {
-                    binding.mutedMicro.visibility = View.VISIBLE
-                }
-                else binding.mutedMicro.visibility = View.GONE
-
-                binding.mutedMicro2.visibility = View.VISIBLE
-            }
-            else binding.mutedMicro2.visibility = View.GONE
-
-            binding.userBackground1.setImageResource(R.drawable.user_background1)
-            binding.avatar1.setImageResource(R.drawable.avatar1_48)
-            binding.name1.setText(R.string.you)
-
-            appsStatus = false
-        }
-        else {
-            binding.userBackground1.setImageResource(R.drawable.user_background2)
-            binding.avatar1.setImageResource(currentAvatar)
-            binding.name1.text = binding.name2.text
-
-            if (binding.progressBar1.isVisible) {
-                binding.progressBar1.visibility = View.GONE
-                binding.progressBar2.visibility = View.VISIBLE
-                //todo закончил тут, нужно сделать ветку else
-            }
-
-            if (binding.mutedMicro2.isVisible) {
+            if (cameraStatus) {
+                binding.userBackground2.setImageResource(R.drawable.user_background2)
+                binding.avatar2.visibility = View.VISIBLE
+                binding.progressBar2.visibility = View.GONE
+                binding.name2.text = binding.name1.text
+                //binding.mutedMicro2.visibility = View.VISIBLE
                 if (binding.mutedMicro.isVisible) {
+                    if (binding.mutedMicro2.isVisible) {
+                        binding.mutedMicro.visibility = View.VISIBLE
+                    }
+                    else binding.mutedMicro.visibility = View.GONE
+
                     binding.mutedMicro2.visibility = View.VISIBLE
                 }
                 else binding.mutedMicro2.visibility = View.GONE
 
-                binding.mutedMicro.visibility = View.VISIBLE
+                binding.userBackground1.setImageResource(R.drawable.user_background_loading)
+                binding.avatar1.visibility = View.GONE
+                binding.progressBar1.visibility = View.VISIBLE
+                binding.name1.setText(R.string.you)
+                //binding.mutedMicro.visibility = View.GONE
             }
-            else binding.mutedMicro.visibility = View.GONE
+            else {
+                binding.userBackground2.setImageResource(R.drawable.user_background2)
+                binding.avatar2.setImageResource(currentAvatar)
+                binding.name2.text = binding.name1.text
+                if (binding.mutedMicro.isVisible) {
+                    if (binding.mutedMicro2.isVisible) {
+                        binding.mutedMicro.visibility = View.VISIBLE
+                    }
+                    else binding.mutedMicro.visibility = View.GONE
 
-            binding.userBackground2.setImageResource(R.drawable.user_background1)
-            binding.avatar2.setImageResource(R.drawable.avatar1_48)
-            binding.name2.setText(R.string.you)
+                    binding.mutedMicro2.visibility = View.VISIBLE
+                }
+                else binding.mutedMicro2.visibility = View.GONE
 
+                binding.userBackground1.setImageResource(R.drawable.user_background1)
+                binding.avatar1.setImageResource(R.drawable.avatar1_48)
+                binding.name1.setText(R.string.you)
+            }
+            appsStatus = false
+        }
+        else {
+            if (cameraStatus) {
+                binding.userBackground1.setImageResource(R.drawable.user_background2)
+                binding.avatar1.visibility = View.VISIBLE
+                binding.progressBar1.visibility = View.GONE
+                binding.avatar1.setImageResource(currentAvatar)
+                binding.name1.text = binding.name2.text
+
+                if (binding.mutedMicro2.isVisible) {
+                    if (binding.mutedMicro.isVisible) {
+                        binding.mutedMicro2.visibility = View.VISIBLE
+                    }
+                    else binding.mutedMicro2.visibility = View.GONE
+
+                    binding.mutedMicro.visibility = View.VISIBLE
+                }
+                else binding.mutedMicro.visibility = View.GONE
+
+                binding.userBackground2.setImageResource(R.drawable.user_background_loading)
+                binding.avatar2.visibility = View.GONE
+                binding.progressBar2.visibility = View.VISIBLE
+                binding.name2.setText(R.string.you)
+            }
+            else {
+                binding.userBackground1.setImageResource(R.drawable.user_background2)
+                binding.avatar1.setImageResource(currentAvatar)
+                binding.name1.text = binding.name2.text
+
+                if (binding.progressBar1.isVisible) {
+                    binding.progressBar1.visibility = View.GONE
+                    binding.progressBar2.visibility = View.VISIBLE
+                }
+
+                if (binding.mutedMicro2.isVisible) {
+                    if (binding.mutedMicro.isVisible) {
+                        binding.mutedMicro2.visibility = View.VISIBLE
+                    }
+                    else binding.mutedMicro2.visibility = View.GONE
+
+                    binding.mutedMicro.visibility = View.VISIBLE
+                }
+                else binding.mutedMicro.visibility = View.GONE
+
+                binding.userBackground2.setImageResource(R.drawable.user_background1)
+                binding.avatar2.setImageResource(R.drawable.avatar1_48)
+                binding.name2.setText(R.string.you)
+            }
             appsStatus = true
         }
     }
