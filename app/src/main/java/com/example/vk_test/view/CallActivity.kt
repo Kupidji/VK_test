@@ -134,7 +134,7 @@ class CallActivity : AppCompatActivity() {
                 binding.avatar2.visibility = View.VISIBLE
                 binding.progressBar2.visibility = View.GONE
                 binding.name2.text = binding.name1.text
-                //binding.mutedMicro2.visibility = View.VISIBLE
+
                 if (binding.mutedMicro.isVisible) {
                     if (binding.mutedMicro2.isVisible) {
                         binding.mutedMicro.visibility = View.VISIBLE
@@ -149,7 +149,6 @@ class CallActivity : AppCompatActivity() {
                 binding.avatar1.visibility = View.GONE
                 binding.progressBar1.visibility = View.VISIBLE
                 binding.name1.setText(R.string.you)
-                //binding.mutedMicro.visibility = View.GONE
             }
             else {
                 binding.userBackground2.setImageResource(R.drawable.user_background2)
