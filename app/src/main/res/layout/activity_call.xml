@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.CallActivity"
+    android:background="@drawable/background"
+    >
+
+    <ImageButton
+        android:id="@+id/arrowDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/arrow_down_24"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="16dp"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/marginMainActivity"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/marginMainActivity2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp"
+        />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/arrowDown"
+        app:layout_constraintStart_toStartOf="@id/marginMainActivity"
+        app:layout_constraintEnd_toEndOf="@id/marginMainActivity2"
+        app:constraint_referenced_ids="message, person, apps"
+        app:flow_horizontalStyle="spread_inside"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="16dp"
+        />
+
+    <ImageButton
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/marginMainActivity"
+        app:layout_constraintEnd_toStartOf="@id/person"
+        android:src="@drawable/message_32"
+        android:background="@android:color/transparent"
+        />
+
+    <ImageButton
+        android:id="@+id/person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/arrowDown"
+        app:layout_constraintStart_toEndOf="@id/message"
+        app:layout_constraintEnd_toStartOf="@id/apps"
+        android:src="@drawable/person_32"
+        android:background="@android:color/transparent"
+        />
+
+    <ImageButton
+        android:id="@+id/apps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/person"
+        app:layout_constraintEnd_toEndOf="@id/marginMainActivity2"
+        android:src="@drawable/mosaic_32"
+        android:background="@android:color/transparent"
+        />
+
+    <!-- user1-->
+    <ImageView
+        android:id="@+id/userBackground1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/marginMainActivity"
+        app:layout_constraintEnd_toEndOf="@id/marginMainActivity2"
+        app:layout_constraintTop_toBottomOf="@id/flow1"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/user_background1"
+        />
+
+    <ImageView
+        android:id="@+id/avatar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/userBackground1"
+        app:layout_constraintEnd_toEndOf="@id/userBackground1"
+        app:layout_constraintTop_toTopOf="@id/userBackground1"
+        app:layout_constraintBottom_toBottomOf="@id/userBackground1"
+        android:src="@drawable/avatar1_48"
+        />
+
+    <ProgressBar
+        android:id="@+id/progress_bar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/userBackground1"
+        app:layout_constraintEnd_toEndOf="@id/userBackground1"
+        app:layout_constraintTop_toTopOf="@id/userBackground1"
+        app:layout_constraintBottom_toBottomOf="@id/userBackground1"
+        android:visibility="gone"
+        />
+
+    <TextView
+        style="@style/text"
+        android:id="@+id/name1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/userBackground1"
+        app:layout_constraintTop_toTopOf="@id/avatar1"
+        app:layout_constraintBottom_toBottomOf="@id/userBackground1"
+        app:layout_constraintEnd_toStartOf="@id/muted_micro"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.95"
+        android:text="@string/you"
+        android:ellipsize="end"
+        />
+
+    <ImageView
+        android:id="@+id/muted_micro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/name1"
+        app:layout_constraintTop_toTopOf="@id/name1"
+        app:layout_constraintBottom_toBottomOf="@id/name1"
+        app:layout_constraintEnd_toEndOf="@id/marginMainActivity2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:src="@drawable/mic_off_16"
+        android:layout_marginStart="4dp"
+        android:visibility="gone"
+        />
+
+    <!-- user2-->
+    <ImageView
+        android:id="@+id/userBackground2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/marginMainActivity"
+        app:layout_constraintEnd_toEndOf="@id/marginMainActivity2"
+        app:layout_constraintTop_toBottomOf="@id/userBackground1"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/user_background2"
+        />
+
+    <ImageView
+        android:id="@+id/avatar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/userBackground2"
+        app:layout_constraintEnd_toEndOf="@id/userBackground2"
+        app:layout_constraintTop_toTopOf="@id/userBackground2"
+        app:layout_constraintBottom_toBottomOf="@id/userBackground2"
+        android:src="@drawable/avatar2_48"
+        />
+
+    <ProgressBar
+        android:id="@+id/progress_bar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/userBackground2"
+        app:layout_constraintEnd_toEndOf="@id/userBackground2"
+        app:layout_constraintTop_toTopOf="@id/userBackground2"
+        app:layout_constraintBottom_toBottomOf="@id/userBackground2"
+        android:visibility="gone"
+        />
+
+    <TextView
+        style="@style/text"
+        android:id="@+id/name2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/userBackground1"
+        app:layout_constraintTop_toTopOf="@id/avatar2"
+        app:layout_constraintBottom_toBottomOf="@id/userBackground2"
+        app:layout_constraintEnd_toStartOf="@id/muted_micro2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.95"
+        android:text="@string/name2"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_marginStart="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/muted_micro2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/name2"
+        app:layout_constraintTop_toTopOf="@id/name2"
+        app:layout_constraintBottom_toBottomOf="@id/name2"
+        app:layout_constraintEnd_toEndOf="@id/marginMainActivity2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:src="@drawable/mic_off_16"
+        android:layout_marginStart="4dp"
+        android:visibility="visible"
+        android:layout_marginEnd="16dp"
+        />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bottom_sheet"
+                android:layout_height="140dp"
+                android:layout_width="match_parent"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                android:background="@drawable/bottom_navigation_background">
+
+                    <androidx.constraintlayout.helper.widget.Flow
+                        android:id="@+id/flow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="camera, mic, hand, call_down"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@id/mic"
+                        android:src="@drawable/camera_off_60"
+                        android:background="@android:color/transparent"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/mic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/camera"
+                        app:layout_constraintEnd_toStartOf="@id/hand"
+                        android:src="@drawable/mic_on_60"
+                        android:background="@android:color/transparent"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/hand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/mic"
+                        app:layout_constraintEnd_toStartOf="@id/call_down"
+                        android:src="@drawable/hand_60"
+                        android:background="@android:color/transparent"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/call_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/hand"
+                        android:src="@drawable/call_down_60"
+                        android:background="@android:color/transparent"
+                        />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupUpperButtons"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="message, person, apps"
+        android:visibility="visible"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
