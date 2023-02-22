@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vk_test.data.Contact
 import com.example.vk_test.databinding.ActivityContactsBinding
 import com.example.vk_test.util.Constants
-import com.example.vk_test.util.ContactAdapter
 
 class ContactsActivity : AppCompatActivity(), ContactAdapter.ContactListener {
 
@@ -30,4 +29,13 @@ class ContactsActivity : AppCompatActivity(), ContactAdapter.ContactListener {
         setResult(RESULT_OK, intent)
         finish()
     }
+
+    override fun onCallCameraClickListener(contact: Contact) {
+        val intent = Intent()
+        intent.putExtra(Constants.CONTACT, contact)
+        setResult(Constants.RESULT_OK_CAMERA, intent)
+        finish()
+    }
+
+
 }

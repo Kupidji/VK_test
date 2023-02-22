@@ -16,14 +16,25 @@
         />
 
     <ImageView
-        android:id="@+id/avatar"
+        android:id="@+id/avatar_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/background"
         app:layout_constraintTop_toTopOf="@id/background"
         app:layout_constraintBottom_toBottomOf="@id/background"
-        android:src="@drawable/avatar2_48"
         android:layout_marginStart="16dp"
+        android:src="@drawable/avatar_background_64"
+        />
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/avatar_background"
+        app:layout_constraintTop_toTopOf="@id/avatar_background"
+        app:layout_constraintBottom_toBottomOf="@id/avatar_background"
+        app:layout_constraintEnd_toEndOf="@id/avatar_background"
+        android:src="@drawable/avatar2_48"
         />
 
     <TextView
@@ -39,15 +50,30 @@
         />
 
     <ImageButton
-        android:id="@+id/call"
+        android:id="@+id/call_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/background"
         app:layout_constraintTop_toTopOf="@id/background"
         app:layout_constraintBottom_toBottomOf="@id/background"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/call_48"
+        android:src="@drawable/camera_on_24"
         android:background="@android:color/transparent"
+        android:minHeight="48dp"
+        android:minWidth="48dp"
+        />
+
+    <ImageButton
+        android:id="@+id/call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/call_camera"
+        app:layout_constraintTop_toTopOf="@id/call_camera"
+        app:layout_constraintBottom_toBottomOf="@id/call_camera"
+        android:src="@drawable/call_24"
+        android:background="@android:color/transparent"
+        android:minHeight="48dp"
+        android:minWidth="48dp"
         />
 
     <Space

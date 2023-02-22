@@ -1,4 +1,4 @@
-package com.example.vk_test.util
+package com.example.vk_test.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.vk_test.R
 import com.example.vk_test.data.Contact
 import com.example.vk_test.databinding.ContactPatternBinding
-import com.example.vk_test.view.ContactsActivity
 
 class ContactAdapter(val listener: ContactListener) : RecyclerView.Adapter<ContactAdapter.ContactHolder>() {
 
@@ -48,12 +47,18 @@ class ContactAdapter(val listener: ContactListener) : RecyclerView.Adapter<Conta
             binding.call.setOnClickListener {
                 listener.onCallClickListener(contact)
             }
+
+            binding.callCamera.setOnClickListener {
+                listener.onCallCameraClickListener(contact)
+            }
+
         }
 
     }
 
     interface ContactListener {
         fun onCallClickListener(contact: Contact)
+        fun onCallCameraClickListener(contact: Contact)
     }
 
 }

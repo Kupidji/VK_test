@@ -13,7 +13,7 @@ class MyAlertDialog : DialogFragment(){
             val builder = AlertDialog.Builder(it)
             builder.setTitle("Выбирите действие")
                 .setMessage("Помахать собеседнику?")
-                .setIcon(R.drawable.ic_launcher_background)
+                .setIcon(R.mipmap.ic_launcher_round)
                 .setCancelable(true)
                 .setPositiveButton("Да") { _, _ ->
                     Toast.makeText(

@@ -1,14 +1,20 @@
 package com.example.vk_test.view
 
 import android.content.Intent
+import android.icu.text.ListFormatter.Width
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import com.example.vk_test.R
@@ -27,6 +33,8 @@ class CallActivity : AppCompatActivity() {
     private var cameraStatus = false
     private var micStatus = false
     private var launcher : ActivityResultLauncher<Intent>? = null
+    private var doubleBackToExitPressedOnce = false
+    private var uiStatus = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +44,8 @@ class CallActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         bottomSheet()
+
+        hideUI()
 
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result : ActivityResult ->
@@ -52,6 +62,60 @@ class CallActivity : AppCompatActivity() {
                 }
 
             }
+            if (result.resultCode == Constants.RESULT_OK_CAMERA) {
+                val tempContact = (result.data?.getSerializableExtra(Constants.CONTACT) as Contact)
+                currentAvatar = tempContact.avatar
+                cameraStatus = true
+                binding.camera.setImageResource(R.drawable.camera_on_60)
+                if (appsStatus) {
+                    binding.avatar1.setImageResource(tempContact.avatar)
+                    binding.name1.text = tempContact.name
+
+                    binding.userBackground2.setImageResource(R.drawable.user_background_loading)
+                    binding.avatar2.visibility = View.GONE
+                    binding.progressBar2.visibility = View.VISIBLE
+                    binding.name2.setText(R.string.you)
+                }
+                else {
+                    binding.avatar2.setImageResource(tempContact.avatar)
+                    binding.name2.text = tempContact.name
+
+                    binding.userBackground1.setImageResource(R.drawable.user_background_loading)
+                    binding.avatar1.visibility = View.GONE
+                    binding.progressBar1.visibility = View.VISIBLE
+                    binding.name1.setText(R.string.you)
+                }
+
+            }
+        }
+
+        binding.root.setOnClickListener {
+            if (uiStatus) {
+                val mLoadAnimation: Animation = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_in)
+                mLoadAnimation.duration = 400
+                binding.message.startAnimation(mLoadAnimation)
+                binding.person.startAnimation(mLoadAnimation)
+                binding.apps.startAnimation(mLoadAnimation)
+                binding.groupUpperButtons.visibility = View.VISIBLE
+                BottomSheetBehavior.from(binding.bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
+                uiStatus = false
+            }
+            else {
+                hideUI()
+                val mLoadAnimation: Animation = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)
+                mLoadAnimation.duration = 400
+                binding.message.startAnimation(mLoadAnimation)
+                binding.person.startAnimation(mLoadAnimation)
+                binding.apps.startAnimation(mLoadAnimation)
+                binding.groupUpperButtons.visibility = View.INVISIBLE
+                BottomSheetBehavior.from(binding.bottomSheet).state = BottomSheetBehavior.STATE_COLLAPSED
+                uiStatus = true
+            }
+
+        }
+
+        binding.arrowDown.setOnClickListener {
+            Toast.makeText(this, "Приложение свернулось в миниатюру", Toast.LENGTH_SHORT).show()
         }
 
         binding.message.setOnClickListener {
@@ -87,6 +151,32 @@ class CallActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Свернуть вызов?", Toast.LENGTH_SHORT).show()
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 3000)
+    }
+
+    private fun hideUI() {
+        Handler().postDelayed(
+            Runnable {
+                val mLoadAnimation: Animation = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)
+                mLoadAnimation.duration = 400
+                binding.message.startAnimation(mLoadAnimation)
+                binding.person.startAnimation(mLoadAnimation)
+                binding.apps.startAnimation(mLoadAnimation)
+                BottomSheetBehavior.from(binding.bottomSheet).state = BottomSheetBehavior.STATE_COLLAPSED
+                binding.groupUpperButtons.visibility = View.INVISIBLE
+                uiStatus = true
+            },
+            4000
+        )
+    }
+
     private fun sayHello() {
         val alert = MyAlertDialog()
         val manager = supportFragmentManager
@@ -102,11 +192,13 @@ class CallActivity : AppCompatActivity() {
                 binding.userBackground2.setImageResource(R.drawable.user_background1)
                 binding.avatar2.visibility = View.VISIBLE
                 binding.progressBar2.visibility = View.GONE
+                binding.avatar2.setImageResource(R.drawable.avatar1_48)
             }
             else {
                 binding.userBackground1.setImageResource(R.drawable.user_background1)
                 binding.avatar1.visibility = View.VISIBLE
                 binding.progressBar1.visibility = View.GONE
+                binding.avatar1.setImageResource(R.drawable.avatar1_48)
             }
         }
         else {
@@ -128,10 +220,11 @@ class CallActivity : AppCompatActivity() {
     }
 
     private fun switchUsers() {
-        if (appsStatus) {
-            if (cameraStatus) {
+        if (appsStatus) { //Если you в нижней плитке то...
+            if (cameraStatus) { //Если камера включена то...
                 binding.userBackground2.setImageResource(R.drawable.user_background2)
                 binding.avatar2.visibility = View.VISIBLE
+                binding.avatar2.setImageResource(currentAvatar)
                 binding.progressBar2.visibility = View.GONE
                 binding.name2.text = binding.name1.text
 
@@ -150,7 +243,7 @@ class CallActivity : AppCompatActivity() {
                 binding.progressBar1.visibility = View.VISIBLE
                 binding.name1.setText(R.string.you)
             }
-            else {
+            else { //Если камера не включена то...
                 binding.userBackground2.setImageResource(R.drawable.user_background2)
                 binding.avatar2.setImageResource(currentAvatar)
                 binding.name2.text = binding.name1.text
@@ -170,8 +263,8 @@ class CallActivity : AppCompatActivity() {
             }
             appsStatus = false
         }
-        else {
-            if (cameraStatus) {
+        else { //Если you в верхней плитке то...
+            if (cameraStatus) { //Если камера включена то...
                 binding.userBackground1.setImageResource(R.drawable.user_background2)
                 binding.avatar1.visibility = View.VISIBLE
                 binding.progressBar1.visibility = View.GONE
@@ -193,7 +286,7 @@ class CallActivity : AppCompatActivity() {
                 binding.progressBar2.visibility = View.VISIBLE
                 binding.name2.setText(R.string.you)
             }
-            else {
+            else { //Если камера не включена то...
                 binding.userBackground1.setImageResource(R.drawable.user_background2)
                 binding.avatar1.setImageResource(currentAvatar)
                 binding.name1.text = binding.name2.text
@@ -243,7 +336,8 @@ class CallActivity : AppCompatActivity() {
     private fun bottomSheet(){
         BottomSheetBehavior.from(binding.bottomSheet).apply {
             peekHeight = 100
-            this.state = BottomSheetBehavior.STATE_COLLAPSED
+            this.state = BottomSheetBehavior.STATE_EXPANDED
+            //this.state = BottomSheetBehavior.STATE_COLLAPSED
         }
     }
 }
