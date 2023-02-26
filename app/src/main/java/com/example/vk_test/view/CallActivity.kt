@@ -27,7 +27,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class CallActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityCallBinding
+    private lateinit var binding : ActivityCallBinding
     private var appsStatus = false
     private var currentAvatar = R.drawable.avatar2_48
     private var cameraStatus = false
@@ -44,8 +44,6 @@ class CallActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         bottomSheet()
-
-        hideUI()
 
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result : ActivityResult ->
@@ -91,25 +89,10 @@ class CallActivity : AppCompatActivity() {
 
         binding.root.setOnClickListener {
             if (uiStatus) {
-                val mLoadAnimation: Animation = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_in)
-                mLoadAnimation.duration = 400
-                binding.message.startAnimation(mLoadAnimation)
-                binding.person.startAnimation(mLoadAnimation)
-                binding.apps.startAnimation(mLoadAnimation)
-                binding.groupUpperButtons.visibility = View.VISIBLE
-                BottomSheetBehavior.from(binding.bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
-                uiStatus = false
+                showUI()
             }
             else {
                 hideUI()
-                val mLoadAnimation: Animation = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)
-                mLoadAnimation.duration = 400
-                binding.message.startAnimation(mLoadAnimation)
-                binding.person.startAnimation(mLoadAnimation)
-                binding.apps.startAnimation(mLoadAnimation)
-                binding.groupUpperButtons.visibility = View.INVISIBLE
-                BottomSheetBehavior.from(binding.bottomSheet).state = BottomSheetBehavior.STATE_COLLAPSED
-                uiStatus = true
             }
 
         }
@@ -161,20 +144,26 @@ class CallActivity : AppCompatActivity() {
         Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 3000)
     }
 
+    private fun showUI() {
+        val mLoadAnimation: Animation = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_in)
+        mLoadAnimation.duration = 400
+        binding.message.startAnimation(mLoadAnimation)
+        binding.person.startAnimation(mLoadAnimation)
+        binding.apps.startAnimation(mLoadAnimation)
+        binding.groupUpperButtons.visibility = View.VISIBLE
+        BottomSheetBehavior.from(binding.bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
+        uiStatus = false
+    }
+
     private fun hideUI() {
-        Handler().postDelayed(
-            Runnable {
-                val mLoadAnimation: Animation = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)
-                mLoadAnimation.duration = 400
-                binding.message.startAnimation(mLoadAnimation)
-                binding.person.startAnimation(mLoadAnimation)
-                binding.apps.startAnimation(mLoadAnimation)
-                BottomSheetBehavior.from(binding.bottomSheet).state = BottomSheetBehavior.STATE_COLLAPSED
-                binding.groupUpperButtons.visibility = View.INVISIBLE
-                uiStatus = true
-            },
-            4000
-        )
+        val mLoadAnimation: Animation = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)
+        mLoadAnimation.duration = 400
+        binding.message.startAnimation(mLoadAnimation)
+        binding.person.startAnimation(mLoadAnimation)
+        binding.apps.startAnimation(mLoadAnimation)
+        binding.groupUpperButtons.visibility = View.INVISIBLE
+        BottomSheetBehavior.from(binding.bottomSheet).state = BottomSheetBehavior.STATE_COLLAPSED
+        uiStatus = true
     }
 
     private fun sayHello() {
